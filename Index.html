@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>SehatMart — Apotek Online</title>
+
+<style>
+
+:root{
+  --primary:#0f9d78;
+  --primary2:#087f62;
+  --soft:#eafaf5;
+  --dark:#12332b;
+  --muted:#6b7c76;
+  --white:#fff;
+  --line:#e5eee9;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f7faf9;
+  color:var(--dark);
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+.container{
+  max-width:1180px;
+  margin:auto;
+  padding:0 18px;
+}
+
+.topbar{
+  background:var(--primary);
+  color:#fff;
+  padding:9px 0;
+  font-size:13px;
+}
+
+.nav{
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.navin{
+  height:72px;
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+  color:var(--primary2);
+  white-space:nowrap;
+}
+
+.logo span{
+  color:#1cbd91;
+}
+
+.search{
+  flex:1;
+  display:flex;
+  background:#f4f8f6;
+  border:1px solid var(--line);
+  border-radius:13px;
+  overflow:hidden;
+}
+
+.search input{
+  width:100%;
+  border:0;
+  background:transparent;
+  padding:13px 15px;
+  outline:0;
+}
+
+.cartbtn{
+  border:0;
+  background:var(--primary);
+  color:white;
+  border-radius:12px;
+  padding:12px 17px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.hero{
+  margin:26px auto;
+  background:linear-gradient(
+    120deg,
+    #dff8ef,
+    #f7fffc
+  );
+  border-radius:22px;
+  padding:38px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.hero h1{
+  font-size:40px;
+  margin:10px 0;
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:600px;
+  line-height:1.6;
+}
+
+.hero .pill{
+  display:inline-block;
+  background:#fff;
+  border:1px solid #ccefe3;
+  padding:8px 12px;
+  border-radius:999px;
+  color:var(--primary2);
+  font-weight:700;
+  font-size:13px;
+}
+
+.heroicon{
+  font-size:90px;
+}
+
+.sectionhead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:28px 0 15px;
+}
+
+.sectionhead h2{
+  margin:0;
+}
+
+.categories{
+  display:flex;
+  gap:9px;
+  overflow:auto;
+  padding-bottom:4px;
+}
+
+.cat{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:999px;
+  padding:9px 15px;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.cat.active{
+  background:var(--primary);
+  color:#fff;
+  border-color:var(--primary);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:
+    repeat(4,1fr);
+  gap:18px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:17px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  box-shadow:
+    0 4px 18px
+    rgba(14,64,50,.04);
+}
+
+.pic{
+  height:190px;
+  background:#f2f8f5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.pic img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.cardbody{
+  padding:15px;
+}
+
+.label{
+  font-size:11px;
+  background:var(--soft);
+  color:var(--primary2);
+  padding:5px 8px;
+  border-radius:6px;
+  display:inline-block;
+  font-weight:700;
+}
+
+.card h3{
+  font-size:16px;
+  margin:10px 0 5px;
+}
+
+.desc{
+  font-size:12px;
+  color:var(--muted);
+  min-height:34px;
+}
+
+.price{
+  font-size:18px;
+  font-weight:900;
+  margin:10px 0;
+}
+
+.stock{
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+.add{
+  width:100%;
+  border:0;
+  background:var(--primary);
+  color:#fff;
+  padding:11px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:800;
+}
+
+.add:disabled{
+  background:#aab8b3;
+  cursor:not-allowed;
+}
+
+.empty{
+  text-align:center;
+  padding:50px;
+  color:var(--muted);
+  grid-column:1/-1;
+}
+
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  z-index:50;
+}
+
+.overlay.show{
+  display:block;
+}
+
+.drawer{
+  position:absolute;
+  right:0;
+  top:0;
+  height:100%;
+  width:min(460px,100%);
+  background:#fff;
+  padding:22px;
+  overflow:auto;
+}
+
+.drawerhead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.close{
+  border:0;
+  background:#eef4f1;
+  border-radius:9px;
+  padding:8px 11px;
+  cursor:pointer;
+}
+
+.cartitem{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.qty{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.qty button{
+  width:28px;
+  height:28px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:7px;
+}
+
+.total{
+  font-size:21px;
+  font-weight:900;
+  display:flex;
+  justify-content:space-between;
+  padding:18px 0;
+}
+
+.checkout{
+  background:var(--soft);
+  padding:16px;
+  border-radius:14px;
+}
+
+.field{
+  margin-bottom:11px;
+}
+
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+.field input,
+.field textarea,
+.field select{
+  width:100%;
+  padding:11px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  outline:0;
+  background:#fff;
+}
+
+.field textarea{
+  min-height:75px;
+  resize:vertical;
+}
+
+.submit{
+  width:100%;
+  background:var(--primary2);
+  color:#fff;
+  border:0;
+  padding:13px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.toast{
+  position:fixed;
+  bottom:22px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#12332b;
+  color:#fff;
+  padding:12px 17px;
+  border-radius:10px;
+  display:none;
+  z-index:100;
+}
+
+.toast.show{
+  display:block;
+}
+
+footer{
+  margin-top:50px;
+  background:#12332b;
+  color:#dcece6;
+  padding:30px 0;
+}
+
+.footgrid{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.small{
+  font-size:12px;
+  color:#b8d1c9;
+}
+
+@media(max-width:900px){
+
+  .grid{
+    grid-template-columns:
+      repeat(3,1fr);
+  }
+
+  .hero h1{
+    font-size:32px;
+  }
+
+}
+
+@media(max-width:650px){
+
+  .navin{
+    height:auto;
+    padding:12px 0;
+    flex-wrap:wrap;
+  }
+
+  .search{
+    order:3;
+    flex-basis:100%;
+  }
+
+  .hero{
+    padding:25px;
+  }
+
+  .heroicon{
+    display:none;
+  }
+
+  .grid{
+    grid-template-columns:
+      repeat(2,1fr);
+    gap:12px;
+  }
+
+  .pic{
+    height:145px;
+  }
+
+  .cardbody{
+    padding:12px;
+  }
+
+  .hero h1{
+    font-size:27px;
+  }
+
+  .footgrid{
+    display:block;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="container">
+    SehatMart • Belanja kebutuhan kesehatan dengan mudah
+  </div>
+</div>
+
+<div class="nav">
+
+  <div class="container navin">
+
+    <div class="logo">
+      Sehat<span>Mart</span>
+    </div>
+
+    <div class="search">
+
+      <input
+        id="search"
+        placeholder="Cari obat, vitamin, alat kesehatan..."
+        oninput="renderProducts()">
+
+    </div>
+
+    <button
+      class="cartbtn"
+      onclick="openCart()">
+
+      🛒 Keranjang
+      (<span id="cartCount">0</span>)
+
+    </button>
+
+  </div>
+
+</div>
+
+<main class="container">
+
+<section class="hero">
+
+  <div>
+
+    <span class="pill">
+      APOTEK ONLINE
+    </span>
+
+    <h1>
+      Kebutuhan kesehatan,
+      lebih mudah.
+    </h1>
+
+    <p>
+      Temukan obat bebas, vitamin,
+      P3K, alat kesehatan, dan
+      produk kesehatan lainnya
+      di SehatMart.
+    </p>
+
+  </div>
+
+  <div class="heroicon">
+    💚
+  </div>
+
+</section>
+
+<div class="sectionhead">
+
+  <h2>
+    Kategori
+  </h2>
+
+</div>
+
+<div
+  class="categories"
+  id="categories">
+</div>
+
+<div class="sectionhead">
+
+  <h2>
+    Produk SehatMart
+  </h2>
+
+  <span
+    class="small"
+    id="count">
+  </span>
+
+</div>
+
+<div
+  class="grid"
+  id="products">
+
+  <div class="empty">
+    Memuat produk...
+  </div>
+
+</div>
+
+</main>
+
+<footer>
+
+  <div class="container footgrid">
+
+    <div>
+
+      <b>
+        SehatMart
+      </b>
+
+      <p class="small">
+        Marketplace kebutuhan kesehatan
+        sederhana berbasis Google Apps Script.
+      </p>
+
+    </div>
+
+    <div class="small">
+
+      Pastikan penggunaan obat mengikuti
+      petunjuk pada kemasan atau anjuran
+      tenaga kesehatan.
+
+    </div>
+
+  </div>
+
+</footer>
+
+<div
+  class="overlay"
+  id="overlay"
+  onclick="if(event.target===this)closeCart()">
+
+  <div class="drawer">
+
+    <div class="drawerhead">
+
+      <h2>
+        Keranjang
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeCart()">
+        ✕
+      </button>
+
+    </div>
+
+    <div id="cartItems"></div>
+
+    <div class="total">
+
+      <span>
+        Total
+      </span>
+
+      <span id="total">
+        Rp0
+      </span>
+
+    </div>
+
+    <div class="checkout">
+
+      <h3>
+        Checkout
+      </h3>
+
+      <div class="field">
+
+        <label>
+          Nama
+        </label>
+
+        <input
+          id="name"
+          placeholder="Nama lengkap">
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          WhatsApp
+        </label>
+
+        <input
+          id="phone"
+          placeholder="08xxxxxxxxxx">
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Alamat
+        </label>
+
+        <textarea
+          id="address"
+          placeholder="Alamat lengkap">
+        </textarea>
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Pembayaran
+        </label>
+
+        <select id="payment">
+
+          <option>
+            Transfer Bank
+          </option>
+
+          <option>
+            COD
+          </option>
+
+          <option>
+            E-Wallet
+          </option>
+
+        </select>
+
+      </div>
+
+      <button
+        class="submit"
+        onclick="checkout()">
+
+        Buat Pesanan
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div
+  class="toast"
+  id="toast">
+</div>
+
+<script>
+
+let products = [];
+
+let cart = {};
+
+let activeCategory = 'Semua';
+
+function money(n){
+
+  return 'Rp' +
+    Number(n || 0)
+      .toLocaleString('id-ID');
+
+}
+
+function toast(msg){
+
+  const e =
+    document.getElementById('toast');
+
+  e.textContent = msg;
+
+  e.classList.add('show');
+
+  setTimeout(
+    () => e.classList.remove('show'),
+    2600
+  );
+
+}
+
+function load(){
+
+  google.script.run
+
+    .withSuccessHandler(data => {
+
+      products = data || [];
+
+      renderCategories();
+
+      renderProducts();
+
+      updateCart();
+
+    })
+
+    .withFailureHandler(e => {
+
+      toast(
+        e.message ||
+        'Gagal memuat produk'
+      );
+
+    })
+
+    .getProducts();
+
+}
+
+function renderCategories(){
+
+  const cats = [
+    'Semua',
+    ...new Set(
+      products.map(
+        p => p.category
+      )
+    )
+  ];
+
+  document.getElementById(
+    'categories'
+  ).innerHTML = cats.map(
+    c => `
+      <button
+        class="cat ${c === activeCategory ? 'active' : ''}"
+        onclick="setCat('${escapeHtml(c)}')">
+
+        ${escapeHtml(c)}
+
+      </button>
+    `
+  ).join('');
+
+}
+
+function setCat(c){
+
+  activeCategory = c;
+
+  renderCategories();
+
+  renderProducts();
+
+}
+
+function renderProducts(){
+
+  const q =
+    document
+      .getElementById('search')
+      .value
+      .toLowerCase()
+      .trim();
+
+  const list =
+    products.filter(p =>
+
+      (
+        activeCategory === 'Semua' ||
+        p.category === activeCategory
+      )
+
+      &&
+
+      (
+        !q ||
+
+        (
+          p.name +
+          ' ' +
+          p.category +
+          ' ' +
+          p.description
+        )
+        .toLowerCase()
+        .includes(q)
+      )
+
+    );
+
+  document.getElementById(
+    'count'
+  ).textContent =
+    list.length + ' produk';
+
+  document.getElementById(
+    'products'
+  ).innerHTML =
+
+    list.length
+
+      ?
+
+    list.map(p => `
+
+      <article class="card">
+
+        <div class="pic">
+
+          <img
+            src="${escapeAttr(p.image)}"
+            alt="${escapeAttr(p.name)}"
+            onerror="this.style.display='none'">
+
+          <span
+            style="font-size:45px">
+            💊
+          </span>
+
+        </div>
+
+        <div class="cardbody">
+
+          <span class="label">
+            ${escapeHtml(
+              p.label || p.category
+            )}
+          </span>
+
+          <h3>
+            ${escapeHtml(p.name)}
+          </h3>
+
+          <div class="desc">
+            ${escapeHtml(p.description)}
+          </div>
+
+          <div class="price">
+            ${money(p.price)}
+          </div>
+
+          <div class="stock">
+
+            ${
+              p.stock > 0
+              ? 'Stok ' + p.stock
+              : 'Stok habis'
+            }
+
+          </div>
+
+          <button
+            class="add"
+            ${p.stock <= 0 ? 'disabled' : ''}
+            onclick="add('${p.id}')">
+
+            ${
+              p.stock > 0
+              ? 'Tambah ke Keranjang'
+              : 'Stok Habis'
+            }
+
+          </button>
+
+        </div>
+
+      </article>
+
+    `).join('')
+
+      :
+
+    `
+      <div class="empty">
+        Produk tidak ditemukan.
+      </div>
+    `;
+
+}
+
+function add(id){
+
+  cart[id] =
+    (cart[id] || 0) + 1;
+
+  const p =
+    products.find(
+      x => x.id === id
+    );
+
+  if(cart[id] > p.stock){
+    cart[id] = p.stock;
+  }
+
+  updateCart();
+
+  toast(
+    p.name +
+    ' ditambahkan ke keranjang'
+  );
+
+}
+
+function change(id, delta){
+
+  const p =
+    products.find(
+      x => x.id === id
+    );
+
+  cart[id] =
+    (cart[id] || 0) + delta;
+
+  if(cart[id] <= 0){
+    delete cart[id];
+  }
+
+  if(
+    p &&
+    cart[id] > p.stock
+  ){
+    cart[id] = p.stock;
+  }
+
+  updateCart();
+
+}
+
+function updateCart(){
+
+  const ids =
+    Object.keys(cart);
+
+  const count =
+    ids.reduce(
+      (s,id) =>
+        s + cart[id],
+      0
+    );
+
+  document.getElementById(
+    'cartCount'
+  ).textContent = count;
+
+  if(!ids.length){
+
+    document.getElementById(
+      'cartItems'
+    ).innerHTML = `
+      <p class="small">
+        Keranjang masih kosong.
+      </p>
+    `;
+
+    document.getElementById(
+      'total'
+    ).textContent = 'Rp0';
+
+    return;
+  }
+
+  let total = 0;
+
+  document.getElementById(
+    'cartItems'
+  ).innerHTML =
+
+    ids.map(id => {
+
+      const p =
+        products.find(
+          x => x.id === id
+        );
+
+      const sub =
+        p.price * cart[id];
+
+      total += sub;
+
+      return `
+
+        <div class="cartitem">
+
+          <div>
+
+            <b>
+              ${escapeHtml(p.name)}
+            </b>
+
+            <div class="small">
+
+              ${money(p.price)}
+              ×
+              ${cart[id]}
+
+            </div>
+
+          </div>
+
+          <div class="qty">
+
+            <button
+              onclick="change('${id}',-1)">
+              −
+            </button>
+
+            <b>
+              ${cart[id]}
+            </b>
+
+            <button
+              onclick="change('${id}',1)">
+              +
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join('');
+
+  document.getElementById(
+    'total'
+  ).textContent =
+    money(total);
+
+}
+
+function openCart(){
+
+  document.getElementById(
+    'overlay'
+  ).classList.add('show');
+
+  updateCart();
+
+}
+
+function closeCart(){
+
+  document.getElementById(
+    'overlay'
+  ).classList.remove('show');
+
+}
+
+function checkout(){
+
+  const ids =
+    Object.keys(cart);
+
+  if(!ids.length){
+
+    return toast(
+      'Keranjang masih kosong'
+    );
+
+  }
+
+  const customer = {
+
+    name:
+      document
+        .getElementById('name')
+        .value
+        .trim(),
+
+    phone:
+      document
+        .getElementById('phone')
+        .value
+        .trim(),
+
+    address:
+      document
+        .getElementById('address')
+        .value
+        .trim()
+
+  };
+
+  if(
+    !customer.name ||
+    !customer.phone ||
+    !customer.address
+  ){
+
+    return toast(
+      'Lengkapi data checkout'
+    );
+
+  }
+
+  const payment =
+    document
+      .getElementById('payment')
+      .value;
+
+  const items =
+    ids.map(id => ({
+      id,
+      qty:cart[id]
+    }));
+
+  google.script.run
+
+    .withSuccessHandler(r => {
+
+      toast(
+        'Pesanan ' +
+        r.orderId +
+        ' berhasil dibuat'
+      );
+
+      cart = {};
+
+      updateCart();
+
+      document.getElementById(
+        'name'
+      ).value = '';
+
+      document.getElementById(
+        'phone'
+      ).value = '';
+
+      document.getElementById(
+        'address'
+      ).value = '';
+
+      setTimeout(
+        closeCart,
+        900
+      );
+
+      load();
+
+    })
+
+    .withFailureHandler(e => {
+
+      toast(
+        e.message ||
+        'Pesanan gagal'
+      );
+
+    })
+
+    .createOrder({
+
+      customer,
+      payment,
+      items
+
+    });
+
+}
+
+function escapeHtml(s){
+
+  return String(
+    s ?? ''
+  ).replace(
+    /[&<>"']/g,
+    m => ({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#039;'
+    }[m])
+  );
+
+}
+
+function escapeAttr(s){
+
+  return escapeHtml(s);
+
+}
+
+load();
+
+</script>
+
+</body>
+</html>
